@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.2",
+    "axios": "^1.5.1",
     "classnames": "^2.3.2",
     "lucide": "^0.288.0",
     "lucide-react": "^0.288.0",

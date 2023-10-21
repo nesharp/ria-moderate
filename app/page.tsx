@@ -1,8 +1,11 @@
 import { Form } from "@/components/form";
 import { ServerData } from "@/interfaces/server";
 import { AutoService } from "@/services/autoService";
-import next from "next";
-
+import next, { Metadata } from "next";
+export const metadata: Metadata = {
+  title: "Додавання оголошення",
+  description: "Додавання оголошення",
+};
 export default async function Home() {
   const brands = await AutoService.getBrands();
   return (
