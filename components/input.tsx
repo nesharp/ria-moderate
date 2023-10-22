@@ -8,6 +8,7 @@ interface InputProps {
   required?: boolean;
   description?: string;
   isError?: boolean;
+  onChange?: (e: any) => void;
 }
 export const Input = ({
   type,
@@ -15,6 +16,7 @@ export const Input = ({
   description,
   required = false,
   isError = false,
+  onChange,
 }: InputProps) => {
   const [isFullfiled, setIsFullfiled] = useState(false);
   return (
@@ -35,6 +37,7 @@ export const Input = ({
           <input
             type={type}
             onChange={(e) => {
+              onChange && onChange(e);
               if (type === "number") {
                 if (e.target.value.length > 0) {
                   setIsFullfiled(true);

@@ -52,14 +52,15 @@ export const Form = ({ brand }: { brand: Data[] }) => {
       drive: e.target[1].value !== "Оберіть" ? e.target[1].value : null,
       isDamaged: e.target[2].checked,
       isAbroad: e.target[3].checked,
-      price: e.target[4].value !== "" ? parseInt(e.target[4].value) : null,
+      price: e.target[4].value !== "" ? parseFloat(e.target[4].value) : null,
       currency: e.target[5].value !== "Оберіть" ? e.target[5].value : null,
       brand: e.target[6].value !== "Оберіть" ? e.target[6].value : null,
       model: e.target[7].value !== "Оберіть" ? e.target[7].value : null,
       year: e.target[8].value !== "" ? parseInt(e.target[8].value) : null,
       run: e.target[9].value !== "" ? parseInt(e.target[9].value) : null,
       engineType: e.target[10].value !== "Оберіть" ? e.target[10].value : null,
-      engineCP: e.target[11].value !== "" ? parseInt(e.target[11].value) : null,
+      engineCP:
+        e.target[11].value !== "" ? parseFloat(e.target[11].value) : null,
       colour: e.target[12].value !== "" ? e.target[12].value : null,
       city: e.target[13].value !== "" ? e.target[13].value : null,
       isTradable: e.target[14].checked,
@@ -143,10 +144,13 @@ export const Form = ({ brand }: { brand: Data[] }) => {
             isError={errors.engineType}
           />
           <Input
-            type="number"
+            type="text"
             className=""
             required
             description="Оберіть об'єм двигуна:"
+            onChange={(e) => {
+              e.target.value = e.target.value.replace(/[^0-9\.]/g, "");
+            }}
             isError={errors.engineCP}
           />
           <Input

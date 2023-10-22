@@ -41,7 +41,7 @@ export const POST = async (req: NextRequest) => {
         errors,
       });
     }
-
+    console.log(body);
     const response = await axios({
       method: "post",
       url: "http://localhost:8000/auto",

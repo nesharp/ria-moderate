@@ -13,9 +13,12 @@ export const PriceInput = ({
   return (
     <div className="flex flex-col lg:flex-row justify-start  w-full gap-2 mt-2">
       <Input
-        type="number"
+        type="text"
         className=""
         required
+        onChange={(e) => {
+          e.target.value = e.target.value.replace(/[^0-9\.]/g, "");
+        }}
         description="Оберіть ціну:"
         isError={isError.price}
       />
