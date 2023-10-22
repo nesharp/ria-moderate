@@ -14,7 +14,8 @@ export const Checkbox = ({
 }: CheckboxProps) => {
   return (
     <div className="flex pt-2">
-      <div className="lg:w-48"></div>
+      <div className="lg:w-[198px]"></div>
+      <div className="h-5 w-5 lg:w-0 lg:h-0"></div>
       <div>
         <div className="flex">
           <input type="checkbox" className="ml-2 h-5 w-5 cursor-pointer" />

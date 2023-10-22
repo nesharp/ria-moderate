@@ -1,6 +1,5 @@
 "use strict";
-import { Check, Leaf } from "lucide-react";
-import { CheckCheck } from "lucide-react";
+import { Check } from "lucide-react";
 import { useState } from "react";
 
 interface InputProps {
@@ -27,9 +26,12 @@ export const Input = ({
         {!isFullfiled && required ? (
           <span className={"text-red-500 w-4 h-4"}>*</span>
         ) : (
-          <Check className="w-5 h-5 text-green-500 align-middle"/>
+          <Check className="w-5 h-5 text-green-500" />
         )}
         <div>
+          <p className="text-left lg:hidden font-normal text-sm ml-2">
+            {description}
+          </p>
           <input
             type={type}
             onChange={(e) => {

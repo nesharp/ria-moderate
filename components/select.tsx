@@ -1,5 +1,6 @@
 "use client";
 import classNames from "classnames";
+import { Check } from "lucide-react";
 import { Dispatch, SetStateAction, useState } from "react";
 
 interface SelectProps {
@@ -25,18 +26,21 @@ export const Select = ({
     <div
       className={classNames(
         className,
-        "flex justify-start items-start gap-2 pt-2"
+        "flex justify-start items-center gap-2 pt-2"
       )}
     >
       <p className=" whitespace-nowrap hidden lg:block lg:w-52 text-left">
         {description}
       </p>
-      {required && (
-        <span className={isFullfiled ? "text-green-500" : "text-red-500"}>
+      {required && !isFullfiled ? (
+        <span className={"text-red-500 h-5 w-5"}>
           *
         </span>
+      ) : (
+        <Check className="h-5 w-5 text-green-500"/>
       )}
       <div className="w-full ">
+        <p className="text-left lg:hidden font-normal text-sm">{description}</p>
         <select
           disabled={disabled}
           onChange={(e) => {
@@ -57,7 +61,11 @@ export const Select = ({
             </option>
           ))}
         </select>
-        {isError && <p className="text-red-500 text-xs text-left ml-2 mt-1">Некоректні данні</p>}
+        {isError && (
+          <p className="text-red-500 text-xs text-left ml-2 mt-1">
+            Некоректні данні
+          </p>
+        )}
       </div>
     </div>
   );
