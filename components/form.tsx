@@ -1,11 +1,5 @@
 "use client";
-import {
-  drives,
-  engineTypes,
-  geaboxes,
-  paintConditions,
-  technicalConditions,
-} from "@/lib/values";
+import { drives, engineTypes, geaboxes } from "@/lib/values";
 import { Button } from "./button";
 import { Checkbox } from "./checkbox";
 import { PriceInput } from "./priceInput";
@@ -16,8 +10,10 @@ import { useEffect, useState } from "react";
 import { Data } from "@/interfaces/server";
 import { AutoService } from "@/services/autoService";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 export const Form = ({ brand }: { brand: Data[] }) => {
+  const router = useRouter();
   const [selectedBrand, setSelectedBrand] = useState<string>("");
   const [models, setModels] = useState<Data[] | null>(null);
   useEffect(() => {
@@ -27,7 +23,24 @@ export const Form = ({ brand }: { brand: Data[] }) => {
       AutoService.getModels(id).then((res) => setModels(res));
     }
   }, [selectedBrand]);
-  const [errors, setErrors] = useState([]);
+  const [errors, setErrors] = useState({
+    geabox: false,
+    drive: false,
+    IsDamaged: false,
+    isAbroad: false,
+    price: false,
+    currency: false,
+    brand: false,
+    model: false,
+    year: false,
+    run: false,
+    engineType: false,
+    engineCP: false,
+    colour: false,
+    city: false,
+    isTradable: false,
+    description: false,
+  });
   const submitHandler = (e: any) => {
     e.preventDefault();
     const data = {
@@ -50,11 +63,16 @@ export const Form = ({ brand }: { brand: Data[] }) => {
     };
     axios({
       method: "post",
-      url: '/api/auto',
+      url: "/api/auto",
       data: data,
     }).then((res) => {
-      console.log(res);
-    })
+      if (res.data.st === 1) {
+        router.push("success");
+      }
+      else{
+        setErrors(res.data.errors);
+      }
+    });
   };
 
   return (
