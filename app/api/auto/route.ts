@@ -49,7 +49,6 @@ export const POST = async (req: NextRequest) => {
         ...body,
       },
     });
-    console.log(response.data.errors);
     if (response.data.status === 0) {
       isErrors = true;
       response.data.errors.forEach((error: string) => {

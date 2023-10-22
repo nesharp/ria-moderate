@@ -44,9 +44,7 @@ export const Form = ({ brand }: { brand: Data[] }) => {
     description: false,
   };
   const [errors, setErrors] = useState(defaultErrors);
-  useEffect(() => {
-    console.log(errors);
-  }, [errors]);
+
   const submitHandler = (e: any) => {
     e.preventDefault();
     const data = {
