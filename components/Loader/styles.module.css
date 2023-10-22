@@ -1,0 +1,4 @@
+.loaderWrapper{
+    @apply absolute top-1/2 z-50 left-1/2 font-thin;
+    transform: translate(-50%, -50%);
+}

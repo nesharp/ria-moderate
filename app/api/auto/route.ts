@@ -1,3 +1,4 @@
+import axios from "axios";
 import { NextApiRequest } from "next";
 import { NextRequest, NextResponse } from "next/server";
 import { object } from "zod";
@@ -9,8 +10,8 @@ export const POST = async (req: NextRequest) => {
     const {
       gearbox,
       drive,
-      IsDamaged,
-      IsAbroad,
+      isDamaged,
+      isAbroad,
       price,
       currency,
       brand,
@@ -21,10 +22,10 @@ export const POST = async (req: NextRequest) => {
       engineCP,
       colour,
       city,
-      IsTradable,
+      isTradable,
       description,
     } = body;
-    let errors = body;
+    let errors = { ...body };
     Object.keys(body).forEach((key) => {
       if (body[key] === null) {
         isErrors = true;
@@ -33,18 +34,30 @@ export const POST = async (req: NextRequest) => {
         errors[key] = false;
       }
     });
+
     if (isErrors) {
       return NextResponse.json({
-        st: 0,
+        status: 0,
         errors,
       });
     }
-    return NextResponse.json({
-      st: 0,
-      errors: {
-        gearbox: true,
+
+    const response = await axios({
+      method: "post",
+      url: "http://localhost:8000/auto",
+      data: {
+        ...body,
       },
     });
+    console.log(response.data.errors);
+    if (response.data.status === 0) {
+      isErrors = true;
+      response.data.errors.forEach((error: string) => {
+        errors[error] = true;
+      });
+      return NextResponse.json({ errors, status: 0 });
+    }
+    return NextResponse.json({ status: 1 });
   } catch {
     return new NextResponse("Something went wrong", { status: 502 });
   }
