@@ -1,5 +1,5 @@
 "use client";
-import { drives, engineTypes, geaboxes } from "@/lib/values";
+import { drives, engineTypes, gearboxes } from "@/lib/values";
 import { Button } from "./button";
 import { Checkbox } from "./checkbox";
 import { PriceInput } from "./priceInput";
@@ -23,11 +23,11 @@ export const Form = ({ brand }: { brand: Data[] }) => {
       AutoService.getModels(id).then((res) => setModels(res));
     }
   }, [selectedBrand]);
-  const [errors, setErrors] = useState({
-    geabox: false,
+  const defaultErrors = {
+    gearbox: false,
     drive: false,
     IsDamaged: false,
-    isAbroad: false,
+    IsAbroad: false,
     price: false,
     currency: false,
     brand: false,
@@ -38,16 +38,17 @@ export const Form = ({ brand }: { brand: Data[] }) => {
     engineCP: false,
     colour: false,
     city: false,
-    isTradable: false,
+    IsTradable: false,
     description: false,
-  });
+  };
+  const [errors, setErrors] = useState(defaultErrors);
   const submitHandler = (e: any) => {
     e.preventDefault();
     const data = {
-      geabox: e.target[0].value !== "Оберіть" ? e.target[0].value : null,
+      gearbox: e.target[0].value !== "Оберіть" ? e.target[0].value : null,
       drive: e.target[1].value !== "Оберіть" ? e.target[1].value : null,
       IsDamaged: e.target[2].checked,
-      isAbroad: e.target[3].checked,
+      IsAbroad: e.target[3].checked,
       price: e.target[4].value !== "" ? parseInt(e.target[4].value) : null,
       currency: e.target[5].value !== "Оберіть" ? e.target[5].value : null,
       brand: e.target[6].value !== "Оберіть" ? e.target[6].value : null,
@@ -58,7 +59,7 @@ export const Form = ({ brand }: { brand: Data[] }) => {
       engineCP: e.target[11].value !== "" ? parseInt(e.target[11].value) : null,
       colour: e.target[12].value !== "" ? e.target[12].value : null,
       city: e.target[13].value !== "" ? e.target[13].value : null,
-      isTradable: e.target[14].checked,
+      IsTradable: e.target[14].checked,
       description: e.target[15].value !== "" ? e.target[15].value : null,
     };
     axios({
@@ -68,8 +69,9 @@ export const Form = ({ brand }: { brand: Data[] }) => {
     }).then((res) => {
       if (res.data.st === 1) {
         router.push("success");
-      }
-      else{
+      } else {
+        console.log(res.data.errors);
+        setErrors(defaultErrors);
         setErrors(res.data.errors);
       }
     });
@@ -85,27 +87,44 @@ export const Form = ({ brand }: { brand: Data[] }) => {
       }}
     >
       <div>
-        <Select options={geaboxes} required description="Оберіть коробку:" />
-        <Select options={drives} required description="Оберіть тип приводу:" />
-        <Checkbox required text="Участь в дтп" />
-        <Checkbox required text="Під пригон" />
+        <Select
+          options={gearboxes}
+          required
+          isError={errors.gearbox}
+          description="Оберіть коробку:"
+        />
+        <Select
+          options={drives}
+          required
+          isError={errors.drive}
+          description="Оберіть тип приводу:"
+        />
+        <Checkbox required isError={errors.IsDamaged} text="Участь в дтп" />
+        <Checkbox required isError={errors.IsAbroad} text="Під пригон" />
         <PriceInput />
         <Select
           options={brand}
           required
           description="Оберіть марку:"
           setSelectedBrand={setSelectedBrand}
+          isError={errors.brand}
         />
         <Select
           options={models || []}
           required
           description="Оберіть модель:"
           disabled={!models}
+          isError={errors.model}
         />
-        <Input type="number" className="" required description="Оберіть рік:" />
         <Input
           type="number"
-          className=""
+          required
+          description="Оберіть рік:"
+          isError={errors.year}
+        />
+        <Input
+          type="number"
+          isError={errors.run}
           required
           description="Вкажіть пробіг:"
         />
@@ -113,16 +132,28 @@ export const Form = ({ brand }: { brand: Data[] }) => {
           options={engineTypes}
           required
           description="Оберіть тип двигуна:"
+          isError={errors.engineType}
         />
         <Input
           type="number"
           className=""
           required
           description="Оберіть об'єм двигуна:"
+          isError={errors.engineCP}
         />
-        <Input type="text" description="Оберіть колір:" required />
-        <Input type="text" description="Оберіть місто:" required />
-        <Checkbox required text="Можливий обмін" />
+        <Input
+          type="text"
+          description="Оберіть колір:"
+          required
+          isError={errors.colour}
+        />
+        <Input
+          type="text"
+          description="Оберіть місто:"
+          required
+          isError={errors.city}
+        />
+        <Checkbox required text="Можливий обмін" isError={errors.IsTradable} />
         <Textarea />
         <Button>Розмістити оголошення</Button>
       </div>

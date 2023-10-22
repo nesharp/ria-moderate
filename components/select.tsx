@@ -8,6 +8,7 @@ interface SelectProps {
   className?: string;
   description: string;
   disabled?: boolean;
+  isError?: boolean;
   setSelectedBrand?: Dispatch<SetStateAction<string>>;
 }
 export const Select = ({
@@ -17,6 +18,7 @@ export const Select = ({
   description,
   disabled = false,
   setSelectedBrand,
+  isError = false,
 }: SelectProps) => {
   const [isFullfiled, setIsFullfiled] = useState(false);
   return (
@@ -34,7 +36,7 @@ export const Select = ({
           *
         </span>
       )}
-      <div className="w-full flex items-center">
+      <div className="w-full ">
         <select
           disabled={disabled}
           onChange={(e) => {
@@ -55,6 +57,7 @@ export const Select = ({
             </option>
           ))}
         </select>
+        {isError && <p className="text-red-500 text-xs text-left ml-2 mt-1">Некоректні данні</p>}
       </div>
     </div>
   );

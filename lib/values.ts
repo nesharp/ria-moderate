@@ -1,23 +1,23 @@
-export const geaboxes = [
+export const gearboxes = [
   {
     id: 1,
-    value: "ручна / механіка",
+    value: "Ручна / Механіка",
   },
   {
     id: 2,
-    value: "автомат",
+    value: "Автомат",
   },
   {
     id: 3,
-    value: "типтронік",
+    value: "Типтронік",
   },
   {
     id: 4,
-    value: "варіатор",
+    value: "Варіатор",
   },
   {
     id: 5,
-    value: "робот",
+    value: "Робот",
   },
 ];
 export const drives = [
