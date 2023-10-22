@@ -1,5 +1,5 @@
 "use client";
-import { drives, engineTypes, gearboxes } from "@/lib/values";
+import { colors, drives, engineTypes, gearboxes } from "@/lib/values";
 import { Button } from "./button";
 import { Checkbox } from "./checkbox";
 import { PriceInput } from "./priceInput";
@@ -153,12 +153,13 @@ export const Form = ({ brand }: { brand: Data[] }) => {
             }}
             isError={errors.engineCP}
           />
-          <Input
+          {/* <Input
             type="text"
             description="Оберіть колір:"
             required
             isError={errors.colour}
-          />
+          /> */}
+          <Select options={colors} required description="Оберіть колір:" />
           <Input
             type="text"
             description="Оберіть місто:"

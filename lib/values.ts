@@ -80,3 +80,33 @@ export const engineTypes = [
     value: "Газовий",
   },
 ];
+export const colors = [
+  {
+    id: 1,
+    value: "Чорний",
+  },
+  {
+    id: 2,
+    value: "Білий",
+  },
+  {
+    id: 3,
+    value: "Сірий",
+  },
+  {
+    id: 4,
+    value: "Синій",
+  },
+  {
+    id: 5,
+    value: "Червоний",
+  },
+  {
+    id: 6,
+    value: "Жовтий",
+  },
+  {
+    id: 7,
+    value: "Зелений",
+  },
+];
