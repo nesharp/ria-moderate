@@ -1,69 +1,47 @@
-"use strict";
-import { Check } from "lucide-react";
-import { useState } from "react";
+'use strict'
+import classNames from 'classnames'
+import { Check, Replace } from 'lucide-react'
+import { useState } from 'react'
 
 interface InputProps {
-  type: "text" | "number";
-  className?: string;
-  required?: boolean;
-  description?: string;
-  isError?: boolean;
-  onChange?: (e: any) => void;
+    type: 'text' | 'number'
+    className?: string
+    description?: string
+    onChange?: (e: any) => void
+    value?: string
 }
 export const Input = ({
-  type,
-  className,
-  description,
-  required = false,
-  isError = false,
-  onChange,
+    type,
+    className,
+    description,
+
+    onChange,
+    value,
 }: InputProps) => {
-  const [isFullfiled, setIsFullfiled] = useState(false);
-  return (
-    <div className="flex mt-2">
-      <div className="lg:w-[180px] hidden lg:block text-left">
-        {description}
-      </div>
-      <div className="flex justify-start items-center">
-        {!isFullfiled && required ? (
-          <span className={"text-red-500 w-4 h-4"}>*</span>
-        ) : (
-          <Check className="w-5 h-5 text-green-500" />
-        )}
-        <div>
-          <p className="text-left lg:hidden font-normal text-sm ml-2">
-            {description}
-          </p>
-          <input
-            type={type}
-            onChange={(e) => {
-              onChange && onChange(e);
-              if (type === "number") {
-                if (e.target.value.length > 0) {
-                  setIsFullfiled(true);
-                }
-                if (e.target.value.length === 0) {
-                  setIsFullfiled(false);
-                } else {
-                  e.target.value = e.target.value.replace(/[^0-9]/g, "");
-                }
-              } else {
-                if (e.target.value.length > 0) {
-                  setIsFullfiled(true);
-                } else {
-                  setIsFullfiled(false);
-                }
-              }
-            }}
-            className=" border-gray-400 rounded-sm px-2 border-solid border-2 outline-none ml-2 font-normal h-10"
-          />
-          {isError && (
-            <p className="text-red-500 text-xs text-left ml-3 mt-1">
-              Некоректні данні
-            </p>
-          )}
+    return (
+        <div className={(classNames('flex mt-2'), className)}>
+            <div className="flex justify-start items-center">
+                <div className="w-full">
+                    <p className="text-left  font-normal text-sm ml-1">
+                        {description}
+                    </p>
+                    <input
+                        type="text"
+                        pattern={type === 'number' ? '[A-Za-z]{3}' : undefined}
+                        value={value && value}
+                        onChange={(e) => {
+                            onChange && onChange(e.target.value)
+                            if (type === 'number') {
+                                e.target.value = e.target.value.replace(
+                                    /[^0-9\.]/g,
+                                    ''
+                                )
+                            }
+                        }}
+                        className=" border-gray-400 rounded-sm px-2 border-solid border-2 outline-none font-normal h-10 w-full"
+                    />
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  );
-};
+    )
+}

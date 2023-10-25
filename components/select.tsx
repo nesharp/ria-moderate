@@ -1,72 +1,53 @@
-"use client";
-import classNames from "classnames";
-import { Check } from "lucide-react";
-import { Dispatch, SetStateAction, useState } from "react";
-
+'use client'
+import classNames from 'classnames'
+import { Check } from 'lucide-react'
+import { Dispatch, SetStateAction, useState } from 'react'
+import * as SelectType from 'react-select'
+import dynamic from 'next/dynamic'
+import { IOptions } from '@/interfaces/fields'
+// import Select from 'react-select'
+const Select = dynamic(() => import('react-select'), {
+    ssr: false,
+})
 interface SelectProps {
-  options: any;
-  required?: boolean;
-  className?: string;
-  description: string;
-  disabled?: boolean;
-  isError?: boolean;
-  setSelectedBrand?: Dispatch<SetStateAction<string>>;
+    options: { value: string; label: string }[]
+    className?: string
+    description: string
+    isSearchable?: boolean
+    value?: string
+    onChange?: (val: any) => void
 }
-export const Select = ({
-  options,
-  required = false,
-  className,
-  description,
-  disabled = false,
-  setSelectedBrand,
-  isError = false,
+export const CustomSelect = ({
+    options,
+    className,
+    description,
+    isSearchable = false,
+    value,
+    onChange,
 }: SelectProps) => {
-  const [isFullfiled, setIsFullfiled] = useState(false);
-  return (
-    <div
-      className={classNames(
-        className,
-        "flex justify-start items-center gap-2 pt-2"
-      )}
-    >
-      <p className=" whitespace-nowrap hidden lg:block lg:w-52 text-left">
-        {description}
-      </p>
-      {required && !isFullfiled ? (
-        <span className={"text-red-500 h-5 w-5"}>
-          *
-        </span>
-      ) : (
-        <Check className="h-5 w-5 text-green-500"/>
-      )}
-      <div className="w-full ">
-        <p className="text-left lg:hidden font-normal text-sm">{description}</p>
-        <select
-          disabled={disabled}
-          onChange={(e) => {
-            if (e.target.value !== "Оберіть") {
-              setIsFullfiled(true);
-              setSelectedBrand && setSelectedBrand(e.target.value);
-            } else {
-              setIsFullfiled(false);
-              setSelectedBrand && setSelectedBrand("");
-            }
-          }}
-          className=" outline-none border border-solid border-gray-300 rounded-sm p-1 w-full font-normal py-2"
+    return (
+        <div
+            className={classNames(
+                className,
+                'flex justify-start items-center gap-2 pt-2'
+            )}
         >
-          <option>Оберіть</option>
-          {options.map((option: { value: string; id: number }) => (
-            <option key={option.id} value={option.value} className="">
-              {option.value}
-            </option>
-          ))}
-        </select>
-        {isError && (
-          <p className="text-red-500 text-xs text-left ml-2 mt-1">
-            Некоректні данні
-          </p>
-        )}
-      </div>
-    </div>
-  );
-};
+            <div className="w-full ">
+                <p className="text-left font-normal text-sm ml-1">
+                    {description}
+                </p>
+                <Select
+                    options={options}
+                    id=""
+                    className="font-normal"
+                    defaultValue={{ value: value, label: value }}
+                    isSearchable={isSearchable}
+                    onChange={(val: any) => {
+                        onChange && onChange(val.value)
+                    }}
+                    // value={}
+                />
+            </div>
+        </div>
+    )
+}
