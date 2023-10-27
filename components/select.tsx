@@ -16,6 +16,7 @@ interface SelectProps {
     isSearchable?: boolean
     value?: string
     onChange?: (val: any) => void
+    isDisabled?: boolean
 }
 export const CustomSelect = ({
     options,
@@ -24,12 +25,13 @@ export const CustomSelect = ({
     isSearchable = false,
     value,
     onChange,
+    isDisabled = false,
 }: SelectProps) => {
     return (
         <div
             className={classNames(
                 className,
-                'flex justify-start items-center gap-2 pt-2'
+                'flex justify-start items-center gap-2 cursor-pointer'
             )}
         >
             <div className="w-full ">
@@ -37,15 +39,16 @@ export const CustomSelect = ({
                     {description}
                 </p>
                 <Select
+                    isDisabled={isDisabled}
                     options={options}
                     id=""
-                    className="font-normal"
-                    defaultValue={{ value: value, label: value }}
+                    className="font-normal min-w-full"
+                    // defaultValue={options[0]}
                     isSearchable={isSearchable}
                     onChange={(val: any) => {
                         onChange && onChange(val.value)
                     }}
-                    // value={}
+                    value={{ value: value, label: value }}
                 />
             </div>
         </div>
