@@ -1,5 +1,5 @@
-interface IErrors {
-    gearbox?:string
+export interface IErrors {
+    gearbox?: string
     drive?: string
     isDamaged?: string
     isAbroad?: string
@@ -7,12 +7,30 @@ interface IErrors {
     currency?: string
     brand?: string
     model?: string
-    year?:string 
+    year?: string
     run?: string
-    engineType?:string
+    engineType?: string
     engineCP?: string
-    colour?:string
+    colour?: string
     city?: string
     isTradable?: string
-    description?:string
+    description?: string
+}
+export interface IServerErrors {
+    gearbox?: boolean
+    drive?: boolean
+    isDamaged?: boolean
+    isAbroad?: boolean
+    price?: boolean
+    currency?: boolean
+    brand?: boolean
+    model?: boolean
+    year?: boolean
+    run?: boolean
+    engineType?: boolean
+    engineCP?: boolean
+    colour?: boolean
+    city?: boolean
+    isTradable?: boolean
+    description?: boolean
 }

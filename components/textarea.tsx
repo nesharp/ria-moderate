@@ -15,7 +15,7 @@ export const Textarea = ({ value, onChange, placeholder }: Props) => {
                 }}
                 value={value}
                 placeholder={placeholder || 'Опис українською'}
-                className="border border-solid rounded-sm border-gray-300 w-full p-2 outline-none"
+                className="border border-solid rounded-sm border-gray-300 w-full p-2 outline-none font-normal"
             />
         </div>
     )

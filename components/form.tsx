@@ -20,10 +20,12 @@ import { useEffect, useState } from 'react'
 import { useFormConfig } from '@/hooks/useFormConfig'
 import { useModelComplete } from '@/hooks/useModelComplete'
 import { Loader } from './Loader/loader'
-import * as z from 'zod'
 import { Textarea } from './textarea'
 import { FormError } from './error'
+import { IErrors } from '@/interfaces/form-interface'
+import { useRouter } from 'next/navigation'
 export const Form = ({ brands }: { brands: IExtendedOptions[] }) => {
+    const router = useRouter()
     const [errors, setErrors] = useState<IErrors>({})
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [models, setModels] = useState<IOptions[]>([])
@@ -31,16 +33,13 @@ export const Form = ({ brands }: { brands: IExtendedOptions[] }) => {
     useEffect(() => {
         setIsLoading(false)
     }, [])
-    useEffect(() => {
-        console.log(errors)
-    }, [errors])
     useModelComplete(brands, models, setModels, form)
     return !isLoading ? (
         <FormProvider {...form}>
             <form
                 onSubmit={(e) => {
                     e.preventDefault()
-                    onSubmit(form.getValues(), setErrors)
+                    onSubmit(form.getValues(), setErrors, setIsLoading, router)
                 }}
             >
                 <div className="w-10/12 mx-auto lg:w-6/12 animate-in transition-all">
@@ -238,6 +237,7 @@ export const Form = ({ brands }: { brands: IExtendedOptions[] }) => {
                                             onChange={(val) => {
                                                 return field.onChange(val)
                                             }}
+                                            isSearchable
                                         />
                                     </FormControl>
                                 </FormItem>
@@ -379,7 +379,6 @@ export const Form = ({ brands }: { brands: IExtendedOptions[] }) => {
                                 </FormItem>
                             )}
                         />
-
                     </div>
                     <div>
                         <FormField
