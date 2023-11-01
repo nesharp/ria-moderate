@@ -1,3 +1,5 @@
+import { IErrors } from './form-interface'
+
 export interface ServerData {
     name: string
     value: number
