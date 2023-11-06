@@ -1,9 +1,10 @@
 import { ServerData } from '@/interfaces/server'
+const riaApi = process.env.RIA_API
 
 export const AutoService = {
     async getBrands() {
         const response = fetch(
-            'https://developers.ria.com/auto/categories/1/marks?api_key=hPakOudm8AaUyt5aMie8MKqY0xtcIuDWowepg3pa',
+            `https://developers.ria.com/auto/categories/1/marks?api_key=${riaApi}`,
             {
                 cache: 'force-cache',
             }
@@ -21,8 +22,9 @@ export const AutoService = {
         return response
     },
     async getModels(brandId: number) {
+        console.log(riaApi)
         const response = fetch(
-            `https://developers.ria.com/auto/categories/1/marks/${brandId}/models?api_key=hPakOudm8AaUyt5aMie8MKqY0xtcIuDWowepg3pa`
+            `https://developers.ria.com/auto/categories/1/marks/${brandId}/models?api_key=${riaApi}`
         )
             .then((res) => res.json())
             .then((res) =>
@@ -33,6 +35,12 @@ export const AutoService = {
                     }
                 })
             )
+            .then((res) => {
+                console.log(res)
+                return res
+            })
+            .catch((err) => console.log(err))
+
         return response
     },
 }

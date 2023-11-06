@@ -5,7 +5,6 @@ import { Dispatch, SetStateAction, useState } from 'react'
 import * as SelectType from 'react-select'
 import dynamic from 'next/dynamic'
 import { IOptions } from '@/interfaces/fields'
-// import Select from 'react-select'
 const Select = dynamic(() => import('react-select'), {
     ssr: false,
 })
@@ -43,7 +42,6 @@ export const CustomSelect = ({
                     options={options}
                     id=""
                     className="font-normal min-w-full"
-                    // defaultValue={options[0]}
                     isSearchable={isSearchable}
                     onChange={(val: any) => {
                         onChange && onChange(val.value)

@@ -19,7 +19,7 @@ export const useModelComplete = (
     }, [form.watch('brand')])
 
     useEffect(() => {
-        if (models.length > 0) {
+        if (models?.length > 0) {
             form.setValue('model', models[0].value)
         }
     }, [models])
